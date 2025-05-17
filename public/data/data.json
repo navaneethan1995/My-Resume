@@ -1,0 +1,108 @@
+{
+  "backgroundImage": "/Images/bg-img.jpg",
+  "heroImage": "/Images/Navaneethan2.jpg",
+  "aboutImage": "/Images/Navaneethan.jpg",
+  "greeting": "Hello, I'm",
+  "name": "Navaneetha Krishnan",
+  "role": [
+      "Web Developer",
+      "Web Designer",
+      "Full Stack Developer"
+  ],
+  "buttonText": "Download Resume",
+  "aboutMe": {
+      "bio": "Enthusiastic and detail-oriented PHP, java Developer with 2 years of experience in designing and developing dynamic, scalable, and secure web applications. Proficient in PHP, java ,Laravel, MySQL, JavaScript, and RESTful APIs, with expertise in backend development, database management, and API integration. Adept at improving website performance, implementing security best practices, and optimizing databases. Passionate about delivering efficient and user-friendly web solutions.",
+      "gpa": "6.4",
+      "education": {
+          "degree": "BE Mechanical Engineering",
+          "institution": "EBET College of Engineering (Erode Builders Educational Trust)",
+          "duration": "2013 - 2017"
+      },
+      "experience": [
+          {
+              "role": "Full Stack Developer ",
+              "company": "Smik Systems (opc) Pvt Ltd",
+              "duration": "Since July 2023"
+          }
+      ],
+      "skills": [
+          {
+              "category": "Programming Languages",
+              "icon": "💻",
+              "items": [
+                  "JavaScript",
+                  "Java",
+                  "PHP",
+                  "HTML/CSS"
+              ]
+          },
+          {
+              "category": "Frontend Development",
+              "icon": "🖥️",
+              "items": [
+                  "React",
+                  "Boostrap",
+                  "jQuery",
+                  "Tailwind CSS"
+              ]
+          },
+          {
+              "category": "Backend Development",
+              "icon": "⚙️",
+              "items": [
+                  "Laravel",
+                  "Spring Boot",
+                  "REST APIs"
+              ]
+          },
+          {
+              "category": "Databases",
+              "icon": "🗄️",
+              "items": [
+                  "MongoDB",
+                  "MySQL"
+              ]
+          },
+          {
+              "category": "Tools & Technologies",
+              "icon": "🛠️",
+              "items": [
+                  "Git",
+                  "WordPress",
+                  "Postman"
+              ]
+          }
+      ],
+      "projects": [
+    {
+      "title": "Sommelier ",
+      "description": "A restaurant food ordering and table booking application designed to provide a seamless user experience. Built using React Native for the mobile frontend and Laravel for the backend, the application allows users to browse menus, place food orders, and reserve tables effortlessly. It integrates with secure payment gateways to ensure safe transactions and uses Laravel to manage orders, bookings, and user authentication. The system delivers a smooth, efficient, and user-friendly experience tailored specifically for restaurant operations.",
+      "link": "#"
+    },
+    {
+      "title": "Researchcollab.ai",
+      "description": "An interactive online platform designed for research collaboration and knowledge sharing. Built using WordPress with Elementor and Beaver Builder for frontend customization, and powered by PHP and MySQL for backend operations, the platform enables researchers to publish, share, and collaborate on research papers efficiently. It integrates dynamic content management, real-time search, and role-based access control to provide a streamlined experience for contributors.",
+      "link": "https://researchcollab.ai/"
+    }
+  ],
+    "heading": "Contact Us",
+    "description": "Have a project in mind or need help building a complete web solution? Whether it's front-end, back-end, or full stack development, I'm here to help turn your ideas into reality. Get in touch for website development, application design, API integration, or technical consultation. Let's build something great together!",
+    "info": [
+      {
+        "type": "Address",
+        "details": "Coimbatore -641035, Tamil Nadu, India",
+        "icon": "home"
+      },
+      {
+        "type": "Phone",
+        "details": "8300293215",
+        "icon": "phone"
+      },
+      {
+        "type": "Email",
+        "details": "navanee7531@gmail.com",
+        "icon": "mail"
+      }
+    ]
+  }
+}
