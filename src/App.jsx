@@ -10,12 +10,6 @@ import Contact from "./Components/Contact";
 
 
 function AppWrapper() {
-  const location = useLocation();
-  const hideNavbarPaths = ['/dashboard', '/login'];
-  const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
-
-  const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
-
   return (
     <div className="App">
       {!shouldHideNavbar && <NavbarWithSidebar />}
