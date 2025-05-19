@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DownloadCV = ({ buttonText = "Download CV" }) => {
-  const resumeUrl = "/Greetings.pdf"; 
+  const resumeUrl = "/Navaneetha krishnan.pdf"; 
 
   return (
     <a
