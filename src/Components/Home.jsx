@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaLinkedin } from 'react-icons/fa';
+import { FaLinkedin,FaGithub } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
 import DownloadCV from './DownloadCV';
 import Snowfall from 'react-snowfall';
@@ -114,6 +114,15 @@ const HeroSection = () => {
             >
               <FaLinkedin className="cursor-pointer" />
             </a>
+            <a
+              href="https://github.com/navaneethan1995"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-700"
+            >
+              <FaGithub className="cursor-pointer" />
+            </a>
+          
           </div>
         </motion.div>
       </div>

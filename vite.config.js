@@ -4,5 +4,6 @@ import tailwindcss from 'autoprefixer'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),tailwindcss(),],
+  // base :'/MyResume/',
+  plugins: [react(),],
 })

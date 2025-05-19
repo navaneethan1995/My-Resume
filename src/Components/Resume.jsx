@@ -23,7 +23,7 @@ const Resume = () => {
           gpa: data.aboutMe.gpa,
         });
         setExperiences(data.aboutMe.experience || []);
-        setContactInfo(data.info || []);
+        setContactInfo(data.aboutMe.info || []); // ✅ FIXED: Correct path
         setLoading(false);
       })
       .catch((err) => {
@@ -51,7 +51,8 @@ const Resume = () => {
         <h2 className="text-4xl font-bold border-b-4 border-blue-500 inline-block mb-6">Resume</h2>
 
         <div className="grid md:grid-cols-2 gap-10">
-         
+
+          {/* Summary and Education */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -65,10 +66,12 @@ const Resume = () => {
               <p className="italic mt-2">{personalInfo?.bio}</p>
 
               <ul className="space-y-2 mt-4">
-                {contactInfo.map((item) => (
-                  <li key={item.type} className="flex items-center space-x-3">
-                    <div className="bg-white text-black rounded-full p-2">
-                      {/* Add icon rendering logic here if needed */}
+                {contactInfo.map((item, index) => (
+                  <li key={index} className="flex items-center space-x-3">
+                    <div className="bg-white text-black rounded-full p-2 text-sm">
+                      {item.icon === 'home' && '🏠'}
+                      {item.icon === 'phone' && '📞'}
+                      {item.icon === 'mail' && '✉️'}
                     </div>
                     <div>
                       <span className="font-semibold text-cyan-400">{item.type}</span>: {item.details}
@@ -90,6 +93,7 @@ const Resume = () => {
             </div>
           </motion.div>
 
+          {/* Experience */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
