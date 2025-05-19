@@ -12,7 +12,7 @@ import Contact from "./Components/Contact";
 function AppWrapper() {
   return (
     <div className="App">
-      {!shouldHideNavbar && <NavbarWithSidebar />}
+       <NavbarWithSidebar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
