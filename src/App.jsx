@@ -7,8 +7,7 @@ import Skills from "./Components/Skill";
 import Resume from "./Components/Resume";
 import Project from "./Components/Project";
 import Contact from "./Components/Contact";
-import Dashboard from "./Dashboard/Dashboard";
-import Login from "./Dashboard/Login"; // Import Login
+
 
 function AppWrapper() {
   const location = useLocation();
@@ -27,16 +26,6 @@ function AppWrapper() {
         <Route path="/resume" element={<Resume />} />
         <Route path="/projects" element={<Project />} />
         <Route path="/contact" element={<Contact />} />
-        
-        {/* Public Login Route */}
-        <Route path="/login" element={
-          isAuthenticated ? <Navigate to="/dashboard" /> : <Login />
-        } />
-
-        {/* Protected Dashboard Route */}
-        <Route path="/dashboard" element={
-          isAuthenticated ? <Dashboard /> : <Navigate to="/login" />
-        } />
       </Routes>
     </div>
   );

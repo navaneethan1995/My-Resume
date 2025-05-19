@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import {FaLinkedin } from 'react-icons/fa';
+import { FaLinkedin } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
 import DownloadCV from './DownloadCV';
 import Snowfall from 'react-snowfall';
 import { motion } from 'framer-motion';
-import { getPersonalInfo } from '../Services/PersonalInfoService';
+import axios from 'axios';
 import './style.css';
-
-const url = import.meta.env.VITE_API_BASE_URL;
 
 const HeroSection = () => {
   const [heroData, setHeroData] = useState(null);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
-  console.log("url",url);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getPersonalInfo();
-        const data = Array.isArray(response.data) ? response.data[0] : response.data;
+        const response = await axios.get('/data/data.json');
+        const data = response.data;
 
-        
         data.role = Array.isArray(data.role)
           ? data.role
           : typeof data.role === 'string'
@@ -54,14 +49,13 @@ const HeroSection = () => {
 
   if (!heroData) return <div className="text-center mt-10">Loading...</div>;
 
-  
-  const resumeUrl = heroData.resume ? `${heroData.resume}` : null;
+  const resumeUrl = '/Greetings.pdf'; 
 
   return (
     <div
       className="min-h-screen w-full text-white bg-cover bg-center bg-no-repeat relative"
       style={{
-        backgroundImage: `url(${heroData.background_image})`
+        backgroundImage: `url(${heroData.backgroundImage})`
       }}
     >
       <Snowfall
@@ -69,7 +63,8 @@ const HeroSection = () => {
         style={{ position: 'absolute', width: '100%', height: '100%', zIndex: 0 }}
       />
       <div className="relative z-10 flex flex-col lg:flex-row min-h-screen bg-black/10 backdrop-blur-[1px]">
-      
+
+    
         <motion.div
           className="lg:w-1/2 flex items-center justify-center p-4"
           initial={{ opacity: 0, x: -100 }}
@@ -78,14 +73,14 @@ const HeroSection = () => {
         >
           <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-[5px] rounded-full shadow-lg animate-spin-slow mt-20 lg:mt-0">
             <img
-              src={`${heroData.hero_image}`}
+              src={heroData.heroImage}
               alt="Hero"
               className="w-[300px] h-[300px] object-cover rounded-full"
             />
           </div>
         </motion.div>
 
-        
+       
         <motion.div
           className="lg:w-1/2 flex flex-col justify-center items-start p-10 text-left"
           initial={{ opacity: 0, x: 100 }}
@@ -108,10 +103,7 @@ const HeroSection = () => {
             />
           </p>
 
-          
-          {resumeUrl && (
-            <DownloadCV buttonText={heroData.button_text} resumeUrl={resumeUrl} />
-          )}
+          <DownloadCV buttonText="Download CV" />
 
           <div className="flex gap-4 mt-10">
             <a
@@ -123,7 +115,6 @@ const HeroSection = () => {
               <FaLinkedin className="cursor-pointer" />
             </a>
           </div>
-
         </motion.div>
       </div>
     </div>

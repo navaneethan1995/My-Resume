@@ -1,19 +1,20 @@
 import React from 'react';
 
-
-const DownloadCV = ({ buttonText, resumeUrl }) => {
-  if (!resumeUrl) return null;
+const DownloadCV = ({ buttonText = "Download CV" }) => {
+  const resumeUrl = "/Greetings.pdf"; 
 
   return (
     <a
       href={resumeUrl}
-      target="_blank"
       download
-      className="mt-6 inline-block px-6 py-3 bg-yellow-400 text-white rounded-md hover:bg-yellow-500 transition "
+      className="mt-6 inline-block px-6 py-3 bg-yellow-400 text-white rounded-md hover:bg-yellow-500 transition"
     >
-      Download CV
+      {buttonText}
     </a>
   );
 };
 
 export default DownloadCV;
+
+
+

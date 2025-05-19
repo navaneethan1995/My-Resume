@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Snowfall from 'react-snowfall';
-import { getProjects } from '../Services/ProjectService'; 
+import axios from 'axios';
+
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,14 +11,16 @@ const Projects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await getProjects(); 
-        console.log("Fetched data:", response);  
-        if (Array.isArray(response.data)) {  
-          setProjects(response.data); 
+        const response = await axios.get('/data/data.json');
+        const data = response.data;
+
+        if (Array.isArray(data.aboutMe?.projects)) {
+          setProjects(data.aboutMe.projects);
         } else {
-          setError('Data format is incorrect');
+          setError('Projects data is missing or malformed.');
         }
       } catch (err) {
+        console.error('Error fetching projects:', err);
         setError('Error fetching projects');
       } finally {
         setLoading(false);
@@ -32,19 +35,20 @@ const Projects = () => {
   if (!projects.length) return <div className="text-center py-10 text-white">No projects available</div>;
 
   return (
-    <section className="px-6 md:px-30 py-10 bg-[#0f172a] text-white min-h-screen">
+    <section className="px-6 md:px-30 py-10 bg-[#0f172a] text-white min-h-screen relative">
       <Snowfall
         snowflakeCount={100}
         style={{ position: 'absolute', width: '100%', height: '100%', zIndex: 0 }}
       />
-      <div className="text-center mb-10 mt-10">
+
+      <div className="text-center mb-10 mt-10 relative z-10">
         <h2 className="text-4xl font-bold">
           Project <span className="text-green-400">Showcase</span>
         </h2>
       </div>
 
       <motion.div
-        className="grid md:grid-cols-2 gap-8"
+        className="grid md:grid-cols-2 gap-8 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 5 }}

@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';   
 import { FaHome, FaPhone, FaEnvelope } from 'react-icons/fa';
 import Snowfall from 'react-snowfall';
 import { motion } from 'framer-motion';
-import { getContacts, sendMessage } from '../Services/ContactService';  // Import the service functions
 
 const Contact = () => {
   const [contacts, setContacts] = useState([]);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState({ success: null, message: '' });
 
-  // Fetch contacts data on component mount
+  
   useEffect(() => {
-    getContacts()
-      .then((response) => setContacts(response.data))
-      .catch((error) => console.error('Error fetching contact data:', error));
+    axios.get('/data/data.json')
+      .then((response) => {
+        setContacts(response.data.aboutMe?.info || []);
+      })
+      .catch((error) => {
+        console.error('Error loading contact data:', error);
+      });
   }, []);
 
-  // Icon mapping for contact types
   const iconMap = {
     home: <FaHome size={24} />,
     phone: <FaPhone size={24} />,
@@ -24,12 +27,10 @@ const Contact = () => {
     email: <FaEnvelope size={24} />,
   };
 
-  // Handle form input changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ success: null, message: '' });
@@ -37,7 +38,7 @@ const Contact = () => {
     try {
       const response = await sendMessage(form);
       setStatus({ success: true, message: response.data.message });
-      setForm({ name: '', email: '', message: '' }); // Clear form after submission
+      setForm({ name: '', email: '', message: '' });
     } catch (error) {
       const errMsg = error.response?.data?.message || 'Something went wrong.';
       setStatus({ success: false, message: errMsg });
@@ -60,7 +61,7 @@ const Contact = () => {
           <div className="space-y-6 mt-6">
             {contacts.map((item, index) => (
               <motion.div
-                key={item.id}
+                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
@@ -78,7 +79,7 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Right Side: Form */}
+        
         <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 text-black space-y-4 shadow-lg">
           <h3 className="text-2xl font-bold mb-4">Send Message</h3>
           <input

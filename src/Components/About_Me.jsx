@@ -2,37 +2,33 @@ import React, { useEffect, useState } from 'react';
 import Snowfall from 'react-snowfall';
 import DownloadCV from './DownloadCV';
 import { motion } from 'framer-motion';
-import { getExperiences } from '../Services/ExperienceService';
-import { getPersonalInfo } from '../Services/PersonalInfoService';
+import axios from 'axios';
 
 const AboutMe = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [experiences, setExperiences] = useState([]);
-
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    getPersonalInfo()
-      .then((response) => {
-        const info = Array.isArray(response.data) ? response.data[0] : response.data;
+    axios.get('/data/data.json')
+      .then((res) => {
+        const json = res.data;
+        const info = {
+          ...json,
+          ...json.aboutMe,
+        };
 
-        // Ensure resume is a full URL if not already
+        // Ensure resume URL is valid if needed
         if (info.resume && !info.resume.startsWith('http')) {
-          info.resume = `${baseUrl}${info.resume}`;
+          info.resume = `${info.resume}`;
         }
 
         setData(info);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error('Error fetching personal info:', error);
+      .catch((err) => {
+        console.error('Error loading local data.json:', err);
         setLoading(false);
       });
-
-    getExperiences()
-      .then((res) => setExperiences(res.data))
-      .catch((err) => console.error('Error fetching experiences:', err));
   }, []);
 
   if (loading) {
@@ -51,9 +47,7 @@ const AboutMe = () => {
     );
   }
 
-  const imageUrl = data.about_image
-    ? `${data.about_image}`
-    : '/default-profile.jpg';
+  const imageUrl = data.aboutImage || '/default-profile.jpg';
 
   return (
     <section className="relative min-h-screen bg-[#0f172a] text-white overflow-hidden">
@@ -84,19 +78,19 @@ const AboutMe = () => {
                 <h4 className="text-xl font-semibold flex items-center gap-2 mb-2">
                   <span className="text-blue-400">🎓</span> Education
                 </h4>
-                <p className="font-bold">{data.degree || 'Degree not available'}</p>
-                <p className="text-gray-400">{data.institution || 'Institution not available'}</p>
-                <p className="text-gray-400">{data.duration || 'Duration not available'}</p>
+                <p className="font-bold">{data.education?.degree || 'Degree not available'}</p>
+                <p className="text-gray-400">{data.education?.institution || 'Institution not available'}</p>
+                <p className="text-gray-400">{data.education?.duration || 'Duration not available'}</p>
               </div>
 
               <div className="p-4 bg-[#1e293b] rounded-xl">
                 <h4 className="text-xl font-semibold flex items-center gap-2 mb-4">
                   <span className="text-blue-400">💼</span> Experience
                 </h4>
-                {experiences.length > 0 ? (
+                {data.experience?.length > 0 ? (
                   <ul className="space-y-2">
-                    {experiences.map((exp) => (
-                      <li key={exp.id} className="text-gray-300">
+                    {data.experience.map((exp, idx) => (
+                      <li key={idx} className="text-gray-300">
                         <p className="font-semibold">{exp.role}</p>
                         <p className="text-sm text-gray-400">{exp.company}</p>
                         <p className="text-sm text-gray-400">{exp.duration}</p>
@@ -130,11 +124,9 @@ const AboutMe = () => {
           </div>
 
           <h3 className="text-2xl font-bold">{data.name || 'Your Name'}</h3>
-          <p className="text-gray-400">Full Stack Developer</p>
+          <p className="text-gray-400">{data.role?.[0] || 'Your Role'}</p>
 
-          {data.resume && (
-            <DownloadCV buttonText={data.button_text || 'Download CV'} resumeUrl={data.resume} />
-          )}
+          <DownloadCV buttonText="Download CV" />
         </motion.div>
       </div>
     </section>

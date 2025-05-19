@@ -1,40 +1,39 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Snowfall from 'react-snowfall';
 import { motion } from 'framer-motion';
-import { FaHome, FaPhone, FaEnvelope } from 'react-icons/fa';
-import { getPersonalInfo } from '../services/PersonalInfoService';
-import { getExperiences } from '../services/ExperienceService';
-import { getContacts } from '../Services/ContactService';
 
 const Resume = () => {
   const [personalInfo, setPersonalInfo] = useState({});
   const [experiences, setExperiences] = useState([]);
   const [contactInfo, setContactInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [personalRes, experienceRes, contactRes] = await Promise.all([
-          getPersonalInfo(),
-          getExperiences(),
-          getContacts(),
-        ]);
-
-        setPersonalInfo(personalRes.data[0] || {});
-        setExperiences(experienceRes.data || []);
-        setContactInfo(contactRes.data || []);
-      } catch (error) {
-        console.error('Error fetching resume data:', error);
-      } finally {
+    axios.get('/data/data.json')
+      .then((res) => {
+        const data = res.data;
+        setPersonalInfo({
+          name: data.name,
+          bio: data.aboutMe.bio,
+          degree: data.aboutMe.education.degree,
+          institution: data.aboutMe.education.institution,
+          duration: data.aboutMe.education.duration,
+          gpa: data.aboutMe.gpa,
+        });
+        setExperiences(data.aboutMe.experience || []);
+        setContactInfo(data.info || []);
         setLoading(false);
-      }
-    };
-
-    fetchData();
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <div className="text-center py-10 text-white">Loading...</div>;
+  if (error) return <div className="text-center py-10 text-red-500">Error: {error}</div>;
 
   return (
     <section className="px-6 md:px-30 sm:py-20 py-20 bg-[#0f172a] text-white relative min-h-screen overflow-hidden">
@@ -52,39 +51,33 @@ const Resume = () => {
         <h2 className="text-4xl font-bold border-b-4 border-blue-500 inline-block mb-6">Resume</h2>
 
         <div className="grid md:grid-cols-2 gap-10">
-
-          {/* Left Side: Summary and Education */}
+         
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            {/* Summary */}
             <h3 className="text-2xl font-bold mb-4">Summary</h3>
             <div className="relative pl-8 border-l-2 border-blue-500 mb-10">
               <div className="absolute left-[-8px] top-0 bg-white border-2 border-blue-500 rounded-full w-4 h-4"></div>
               <h4 className="text-xl font-semibold">{personalInfo?.name}</h4>
               <p className="italic mt-2">{personalInfo?.bio}</p>
 
-           
               <ul className="space-y-2 mt-4">
-                {contactInfo.map((item, index) => (
-                  <li key={item.id} className="flex items-center space-x-3">
+                {contactInfo.map((item) => (
+                  <li key={item.type} className="flex items-center space-x-3">
                     <div className="bg-white text-black rounded-full p-2">
-                      
-                     
+                      {/* Add icon rendering logic here if needed */}
                     </div>
                     <div>
-                      <span className="font-semibold text-cyan-400 text-white">{item.type}</span>
+                      <span className="font-semibold text-cyan-400">{item.type}</span>: {item.details}
                     </div>
                   </li>
                 ))}
               </ul>
-
             </div>
 
-            {/* Education */}
             <h3 className="text-2xl font-bold mb-4">Education</h3>
             <div className="relative pl-8 border-l-2 border-blue-500 space-y-8">
               <div className="relative">
@@ -97,7 +90,6 @@ const Resume = () => {
             </div>
           </motion.div>
 
-          {/* Right Side: Experience */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
