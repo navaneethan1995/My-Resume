@@ -87,7 +87,7 @@
     {
       "title":"My PortFolio",
       "description":"web application designed to professionally showcase my personal information, technical skills, projects, resume, and contact details. The front end is built with React.js, featuring a responsive and user-friendly UI with smooth animations powered by Framer Motion and interactive elements like snowfall effects. It includes dedicated sections such as 'About Me', 'Skills', 'Resume', 'Projects', and 'Contact', providing a structured and visually appealing presentation of my work and experience. An admin dashboard is included, secured with a static login system, allowing content to be dynamically managed through a sidebar-based form editor. The dashboard supports real-time CRUD operations for each section, enabling efficient updates without navigating away from the interface. Data is fetched and managed via service files for clean architecture, and the backend is powered by Laravel APIs, ensuring seamless and secure data handling. Overall, the project emphasizes clarity, maintainability, and interactivity, reflecting both front-end finesse and back-end integration in a personal branding tool.",
-      "link":"https://my-resume-git-1704fc-navaneethansmiksystems-gmailcoms-projects.vercel.app/ "
+      "link":"https://naveenkrish.netlify.app/"
     }
   ],
     "heading": "Contact Us",
