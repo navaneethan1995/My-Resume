@@ -115,7 +115,7 @@ const HeroSection = () => {
               <FaLinkedin className="cursor-pointer" />
             </a>
             <a
-              href="https://github.com/navaneethan1995"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-700"
